@@ -16,6 +16,14 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(self.get_response().encode("utf-8"))
 
     def get_response(self):
+        parsed_url = self.url()
+        query = self.query_data()
+
+        if parsed_url.path.startswith("/proyecto/"):
+            proyecto = parsed_url.path.split("/")[2]
+            autor = query.get("autor", "")
+            return f"<h1>Proyecto: {proyecto} Autor: {autor}</h1>"
+        
         return f"""
     <h1> Hola Web </h1>
     <p> URL Parse Result : {self.url()}         </p>
