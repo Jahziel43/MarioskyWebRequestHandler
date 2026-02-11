@@ -1,6 +1,12 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qsl, urlparse
 
+contenido = {
+    "/": open("home.html", "r", encoding="utf-8").read(),
+    "/proyecto/1": open("1.html", "r", encoding="utf-8").read(),
+    "/proyecto/2": "<h1>Proyecto: 2</h1>",
+    "/proyecto/3": "<h1>Proyecto: 3</h1>",
+}
 
 class WebRequestHandler(BaseHTTPRequestHandler):
     def url(self):
@@ -10,13 +16,13 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         return dict(parse_qsl(self.url().query))
 
     def do_GET(self):
-        if self.path == "/":
+        path = self.url().path
+        if path in contenido:
             self.send_response(200)
             self.send_header("Content-Type", "text/html")
             self.end_headers()
+            self.wfile.write(contenido[path].encode("utf-8"))
             # self.wfile.write(self.get_response().encode("utf-8"))
-            with open("home.html", "r", encoding="utf-8") as file:
-                self.wfile.write(file.read().encode("utf-8"))
         else:
             self.send_response(404)
             self.send_header("Content-Type", "text/html")
