@@ -104,5 +104,3 @@ Recuerda que en un diccionario puedes almacenar también métodos, por lo que la
 puedes implmentar es muy variada.
 
 Si llegaste hasta aquí haz un commit con el mensaje "Sitio Web Dinámico".
-
-## Editando remotamente
